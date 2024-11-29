@@ -69,6 +69,16 @@ namespace api.Repository
                 menus = menus.Where(s => s.Category.Contains(query.Category));
             }
 
+            if (!string.IsNullOrEmpty(query.SortBy))
+            {
+                // Compares the SortBy value to the string "Name".
+                // StringComparison.OrdinalIgnoreCase: Ensures the comparison is case-insensitive
+                if (query.SortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    menus = query.IsDecsending ? menus.OrderByDescending(s => s.Name) : menus.OrderBy(s => s.Name);
+                }
+            }
+
             return await menus.ToListAsync();
         }
 

@@ -10,5 +10,8 @@ namespace api.Helpers
         // this serves as a filter for get all menu
         public string? Name { get; set; } = null;
         public string? Category { get; set; } = null;
+
+        public string? SortBy { get; set; } = null;
+        public bool IsDecsending { get; set; } = false;
     }
 }
