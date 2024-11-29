@@ -79,7 +79,14 @@ namespace api.Repository
                 }
             }
 
-            return await menus.ToListAsync();
+            // Skip(skipNumber): Skips the records from the previous pages.
+            // Take(PageSize): Fetches the number of records defined by the page size.
+            // If PageNumber = 2 and PageSize = 10, then:
+            // skipNumber = (2 - 1) * 10 = 10 
+            // This skips the first 10 records.
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+            return await menus.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public async Task<Menu?> GetByIdAsync(int id)
