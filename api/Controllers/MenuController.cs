@@ -66,6 +66,9 @@ namespace api.Controllers
         // FromBody because the data will be saved as json file
         public async Task<IActionResult> Post([FromBody] CreateMenuDTO menuDTO)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var menuModel = menuDTO.ToMenuFromCreateDTO();
             await _menuRepo.CreateAsync(menuModel);
 
@@ -76,7 +79,9 @@ namespace api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateMenuDTO updateDTO)
         {
-            // check if menu with id = id exist
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var menuModel = await _menuRepo.UpdateAsync(id, updateDTO);
 
             if (menuModel == null)
