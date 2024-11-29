@@ -42,8 +42,8 @@ namespace api.Controllers
         }
 
         // async/await explanation
-
-        [HttpGet("{id}")]
+        // addded int for url constraints/route constraints makes sure that id is an int when passed in
+        [HttpGet("{id:int}")]
         // Task is just a return type that gives us the return type in the form of a task
         // async/await functions = speed, 
         // async does not actually do anything under the hood its just there devs to spot asynchronous functions for easier debugging
@@ -73,7 +73,7 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateMenuDTO updateDTO)
         {
             // check if menu with id = id exist
@@ -88,7 +88,7 @@ namespace api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var menuModel = await _menuRepo.DeleteAsync(id);
