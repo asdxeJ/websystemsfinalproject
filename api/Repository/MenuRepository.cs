@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Menu;
+using api.Helpers;
 using api.Interfaces;
 using api.Model;
 using Microsoft.EntityFrameworkCore;
@@ -47,9 +48,28 @@ namespace api.Repository
             return menuModel;
         }
 
-        public async Task<List<Menu>> GetAllAsync()
+        public async Task<List<Menu>> GetAllAsync(QueryObject query)
         {
-            return await _context.Menus.ToListAsync();
+            //AsQueryable:
+            //Keeps the query flexible: Allows you to dynamically build a query by adding filters(Where) based on conditions.
+            // Ensures efficiency: Makes sure that the query is executed directly on the database(via Entity Framework), so only the needed data is fetched.
+            // Prepares for deferred execution: The query is not run immediately;  instead, it’s executed only when the ToListAsync() method is called.
+            var menus = _context.Menus.AsQueryable();
+
+            if (!string.IsNullOrEmpty(query.Name))
+            {
+                // Where is just filtering
+                // Operations like filtering (Where) or sorting are done in the database instead of loading all data into memory.
+                // Contains is a LINQ method that checks whether a string contains a specified substring.
+                menus = menus.Where(s => s.Name.Contains(query.Name));
+            }
+
+            if (!string.IsNullOrEmpty(query.Category))
+            {
+                menus = menus.Where(s => s.Category.Contains(query.Category));
+            }
+
+            return await menus.ToListAsync();
         }
 
         public async Task<Menu?> GetByIdAsync(int id)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Menu;
+using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -30,12 +31,12 @@ namespace api.Controllers
 
         [HttpGet]
         // IActionResult allows your method to return any kind of HTTP response. provides you with return Ok NotFound etc.
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query) // pass the QueryObject here as parameter
         {
             // deferred execution query isn't run right away it waits until data is actually needed use ToList to execute query immediately
             // var menus = await _context.Menus.ToListAsync();
 
-            var menus = await _menuRepo.GetAllAsync();
+            var menus = await _menuRepo.GetAllAsync(query); // use the query object here
             var menuDTO = menus.Select(s => s.ToMenuDTO()); // .Select is just like a mapper a dotnet version of map returns a immutable array or list of ToMenuDTO 
 
             return Ok(menus);
