@@ -42,6 +42,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials()
+    .WithOrigins("http://localhost:5173")
+);
+// .SetIsOriginAllowed(origin => true);
+
 // to avoid https redirection
 app.MapControllers();
 
