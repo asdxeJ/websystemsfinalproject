@@ -1,25 +1,21 @@
 import React from "react";
-import Card from "./MenuCard";
+import { Menu } from "../../Menu";
+import MenuCard from "./MenuCard";
 
-interface Props {}
+interface Props {
+  menu: Menu[];
+}
 
-const CardList = (props: Props) => {
+const MenuCardList: React.FC<Props> = ({ menu }: Props): JSX.Element => {
   return (
     <>
       <div className="grid grid-cols-5 gap-10">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {menu.map((menuItem) => (
+          <MenuCard key={menuItem.id} menu={menuItem} />
+        ))}
       </div>
     </>
   );
 };
 
-export default CardList;
+export default MenuCardList;
