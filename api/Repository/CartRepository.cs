@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
+using api.Dtos.Cart;
 using api.Interfaces;
 using api.Model;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,21 @@ namespace api.Repository
             return cartModel;
         }
 
+        public async Task<Cart?> DeleteAsync(int id)
+        {
+            var cartModel = _context.Carts.FirstOrDefault(x => x.Id == id);
+
+            if (cartModel == null)
+            {
+                return null;
+            }
+
+            _context.Carts.Remove(cartModel);
+            await _context.SaveChangesAsync();
+            return cartModel;
+
+        }
+
         public async Task<List<Cart>> GetAllAsync()
         {
             // to include the details of the menu item from cart
@@ -38,5 +54,18 @@ namespace api.Repository
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
+        public async Task<Cart?> UpdateAsync(int id, UpdateCartDTO cartDTO)
+        {
+            var existingCart = await _context.Carts.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (existingCart == null)
+            {
+                return null;
+            }
+
+            existingCart.Quantity = cartDTO.Quantity;
+            await _context.SaveChangesAsync();
+            return existingCart;
+        }
     }
 }

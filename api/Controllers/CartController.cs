@@ -51,5 +51,34 @@ namespace api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = cartModel }, cartModel.ToCartDTO());
 
         }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        public async Task<IActionResult> DeleteById([FromRoute] int id)
+        {
+            var cartModel = await _cartRepo.DeleteAsync(id);
+
+            if (cartModel == null)
+                return NotFound();
+
+            return NoContent();
+        }
+
+        [HttpPut]
+        [Route("{id:int}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCartDTO updateDTO)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var cartModel = await _cartRepo.UpdateAsync(id, updateDTO);
+
+            if (cartModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(cartModel.ToCartDTO());
+        }
     }
 }
