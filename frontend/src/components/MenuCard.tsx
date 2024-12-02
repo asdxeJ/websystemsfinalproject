@@ -10,7 +10,7 @@ interface Props {
 const MenuCard: React.FC<Props> = ({ menu }): JSX.Element => {
   return (
     <>
-      <div className="bg-black p-3 min-w-50">
+      <div className="bg-black p-3 max-w-[230px]">
         <img className="border border-orange-600" src={bangusH} />
         <div className="text-white flex flex-col items-center justify-center font-inknut">
           <h3>{menu.name}</h3>
