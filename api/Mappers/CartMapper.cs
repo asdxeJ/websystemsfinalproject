@@ -17,6 +17,17 @@ namespace api.Mappers
                 CustomerId = cartModel.CustomerId,
                 MenuId = cartModel.MenuId,
                 Quantity = cartModel.Quantity,
+                MenuItem = cartModel.Menu?.ToMenuDTO() // Map Menu to MenuDTO
+            };
+        }
+
+        public static Cart ToCreateCartDTO(this CreateCartDTO cartCreateDTO)
+        {
+            return new Cart
+            {
+                CustomerId = cartCreateDTO.CustomerId,
+                MenuId = cartCreateDTO.MenuId,
+                Quantity = cartCreateDTO.Quantity,
             };
         }
     }

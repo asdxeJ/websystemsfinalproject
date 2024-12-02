@@ -16,9 +16,27 @@ namespace api.Repository
         {
             _context = context;
         }
+
+        public async Task<Cart> CreateAsync(Cart cartModel)
+        {
+            await _context.Carts.AddAsync(cartModel);
+            await _context.SaveChangesAsync();
+            return cartModel;
+        }
+
         public async Task<List<Cart>> GetAllAsync()
         {
-            return await _context.Carts.ToListAsync();
+            // to include the details of the menu item from cart
+            return await _context.Carts.Include(c => c.Menu).ToListAsync();
         }
+
+        public async Task<Cart?> GetByIdAsync(int id)
+        {
+            // fetch cart by id with its related menu item
+            return await _context.Carts
+                .Include(c => c.Menu)
+                .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
     }
 }

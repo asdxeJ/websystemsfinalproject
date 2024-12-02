@@ -9,5 +9,7 @@ namespace api.Interfaces
     public interface ICartRepository
     {
         Task<List<Cart>> GetAllAsync();
+        Task<Cart> CreateAsync(Cart cartModel);
+        Task<Cart?> GetByIdAsync(int id);
     }
 }
