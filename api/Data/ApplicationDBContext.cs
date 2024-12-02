@@ -19,5 +19,6 @@ namespace api.Data
         // dbset allows us to search for the tables and create the data for us
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Cart> Carts { get; set; }
     }
 }

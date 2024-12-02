@@ -30,6 +30,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 // Avoids issues like multiple database connections or DbContext conflicts.
 builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 
 var app = builder.Build();
 
