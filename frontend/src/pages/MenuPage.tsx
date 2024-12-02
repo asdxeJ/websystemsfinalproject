@@ -3,7 +3,7 @@ import MenuCardList from "../components/MenuCardList";
 import Navbar from "../components/Navbar";
 import { getMenu } from "../../api";
 import { Menu } from "../../Menu";
-import Sidebar from "../components/Sidebar";
+import SideNav from "../components/SideNav";
 import Footer from "../components/Footer";
 
 interface Props {}
@@ -25,8 +25,8 @@ const MenuPage = (props: Props) => {
       <div className="bg-home-bg h-screen bg-cover">
         <Navbar />
         <div className="flex">
-          <div className="flex items-center ml-10">
-            <Sidebar />
+          <div className="mt-10 ml-10">
+            <SideNav />
           </div>
           <div className="flex-1">
             {/* Conditional rendering: only render MenuCardList if menu is defined */}

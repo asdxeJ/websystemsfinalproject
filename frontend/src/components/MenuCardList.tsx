@@ -9,7 +9,7 @@ interface Props {
 const MenuCardList: React.FC<Props> = ({ menu }: Props): JSX.Element => {
   return (
     <>
-      <div className="grid grid-cols-5 gap-10 m-10">
+      <div className="flex flex-wrap gap-10 m-10">
         {menu.map((menuItem) => (
           <MenuCard key={menuItem.id} menu={menuItem} />
         ))}
